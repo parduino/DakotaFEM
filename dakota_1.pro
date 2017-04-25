@@ -30,4 +30,5 @@ HEADERS  += datainput.h
 
 FORMS    += datainput.ui
 
-RESOURCES +=
+RESOURCES += \
+    resources.qrc
