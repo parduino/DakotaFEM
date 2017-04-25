@@ -19,4 +19,7 @@
         <file>RobotoCondensed-LightItalic.ttf</file>
         <file>RobotoCondensed-Regular.ttf</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>dakota.gif</file>
+    </qresource>
 </RCC>

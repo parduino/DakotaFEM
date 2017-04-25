@@ -726,7 +726,7 @@ border:none; </string>
     <widget class="QLabel" name="label_40">
      <property name="geometry">
       <rect>
-       <x>25</x>
+       <x>28</x>
        <y>0</y>
        <width>51</width>
        <height>51</height>
@@ -736,13 +736,9 @@ border:none; </string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../../../Desktop/dakota.gif</pixmap>
+      <pixmap resource="resources.qrc">:/images/dakota.gif</pixmap>
      </property>
     </widget>
-    <zorder>label_3</zorder>
-    <zorder>label_38</zorder>
-    <zorder>label_40</zorder>
-    <zorder>label_39</zorder>
    </widget>
    <widget class="Line" name="line_7">
     <property name="geometry">
@@ -1825,6 +1821,8 @@ border:none; </string>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
