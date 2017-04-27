@@ -9,14 +9,16 @@
 #include <QFileInfo>
 #include <QProcess>
 #include <QProcessEnvironment>
+#include <QStringList>
+#include <QRegExp>
 
 DataInput::DataInput(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::DataInput)
 {
     ui->setupUi(this);
-
-
+    ui->numSamples->setValidator(new QIntValidator);
+    ui->numSamples->setText(QString("10"));
 }
 
 DataInput::~DataInput()
@@ -42,7 +44,11 @@ void DataInput::on_runButton_clicked()
     QString path = fileInfo.absolutePath();
     json["dir"]=path;
 
-    QString method("method,\nsampling,\nsamples = 50,\nseed = 98765,\nsample_type ");
+    int numSamples = ui->numSamples->text().toInt();
+
+    QString method("method,\nsampling,\nsamples = ");
+    method = method + QString::number(numSamples);
+    method = method + QString(" \nseed = 98765,\nsample_type ");
     QString sampleType = ui->comboBox_uq->currentText();
     if (sampleType == QString("LHS"))
         sampleType = QString("lhs");
@@ -136,6 +142,7 @@ void DataInput::on_runButton_clicked()
     messageBox.critical(0,"Error",errorMessage);
     messageBox.setFixedSize(500,200);
     } else {
+
      // do dakota
      QString jsonFileName = path + QString("/dakota.json");
      qDebug() << jsonFileName;
@@ -160,6 +167,54 @@ void DataInput::on_runButton_clicked()
      proc->waitForFinished(-1);
      qDebug() << proc->errorString();
      qDebug() << "PROCESS DONE";
+     QString dakotaData = path + QString("/dakota.tmp");
+     QString dakotaTable = path + QString("/dakotaTab.out");
+     QFile dakotaOut(dakotaData);
+     dakotaOut.open(QFile::ReadOnly);
+     dakotaOut.write(doc.toJson());
+     dakotaOut.close();
+
+     if(!dakotaOut.open(QIODevice::ReadOnly)) {
+         QMessageBox::information(0, "error", dakotaOut.errorString());
+     }
+
+     QTextStream in(&dakotaOut);
+     QStringList fields;
+     while(!in.atEnd()) {
+         QString line = in.readLine();;
+         fields << line.split(" ");
+        //model->appendRow(fields);
+     }
+    // qDebug() << fields;
+     for (int i=0; i<numEDP; i++) {
+         if (!edpNames[i].isEmpty()) {
+         int index = fields.indexOf(QRegExp(edpNames[i]));
+         QString mean = fields.at(index+2);
+         QString stdDev = fields.at(index+4);
+
+         // reformat numbers
+         double meanVal = mean.toDouble();
+         mean = QString::number(meanVal,'e',6);
+         double stdDevVal = stdDev.toDouble();
+         stdDev = QString::number(stdDevVal,'e',6);
+
+
+         // EDIT
+         if (i==0) {
+             ui->edpMean_1->setText(mean);
+             ui->edpStdDev_1->setText(stdDev);
+         } else if (i==1) {
+             ui->edpMean_2->setText(mean);
+             ui->edpStdDev_2->setText(stdDev);
+         } else if (i==2) {
+             ui->edpMean_3->setText(mean);
+             ui->edpStdDev_3->setText(stdDev);
+     }
+     //    qDebug() << "OUTPUT: " << index << " " << mean << " " << stdDev;
+         }
+     }
+     dakotaOut.close();
+
     }
 
     //
