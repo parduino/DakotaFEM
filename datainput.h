@@ -16,9 +16,10 @@ public:
     ~DataInput();
 
 private slots:
-    void on_pushButton_2_clicked();
 
     void on_chooseFile_clicked();
+
+    void on_runButton_clicked();
 
 private:
     Ui::DataInput *ui;

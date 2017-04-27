@@ -88,7 +88,7 @@ QPushButton:pressed {
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="runButton">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -341,7 +341,7 @@ border:none; </string>
      </font>
     </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;EDF Variables &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;EDP Variables &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -1149,7 +1149,7 @@ border:none; </string>
      <string>CDF</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="mean_4">
+   <widget class="QLineEdit" name="edpStdDev_1">
     <property name="geometry">
      <rect>
       <x>319</x>
@@ -1167,7 +1167,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="sd_4">
+   <widget class="QLineEdit" name="edpMean_1">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -1185,7 +1185,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="variableName_4">
+   <widget class="QLineEdit" name="edpName_1">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -1206,7 +1206,7 @@ border:none; </string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="sd_5">
+   <widget class="QLineEdit" name="edpMean_2">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -1224,7 +1224,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="mean_5">
+   <widget class="QLineEdit" name="edpStdDev_2">
     <property name="geometry">
      <rect>
       <x>319</x>
@@ -1278,7 +1278,7 @@ border:none; </string>
      <string>CDF</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="variableName_5">
+   <widget class="QLineEdit" name="edpName_2">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -1335,7 +1335,7 @@ border:none; </string>
      <string>PDF</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="mean_7">
+   <widget class="QLineEdit" name="edpStdDev_3">
     <property name="geometry">
      <rect>
       <x>319</x>
@@ -1353,7 +1353,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="variableName_7">
+   <widget class="QLineEdit" name="edpName_3">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -1374,7 +1374,7 @@ border:none; </string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="sd_7">
+   <widget class="QLineEdit" name="edpMean_3">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -1416,11 +1416,6 @@ border:none; </string>
       <string>LHS</string>
      </property>
     </item>
-    <item>
-     <property name="text">
-      <string>Reliability </string>
-     </property>
-    </item>
    </widget>
    <widget class="QLabel" name="label_27">
     <property name="geometry">
@@ -1440,7 +1435,7 @@ border:none; </string>
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;UQ Method &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="sd_3">
+   <widget class="QLineEdit" name="rvStdDev_3">
     <property name="geometry">
      <rect>
       <x>491</x>
@@ -1458,7 +1453,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="mean_3">
+   <widget class="QLineEdit" name="rvMean_3">
     <property name="geometry">
      <rect>
       <x>337</x>
@@ -1476,7 +1471,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_3">
+   <widget class="QComboBox" name="rvDistribution_3">
     <property name="geometry">
      <rect>
       <x>172</x>
@@ -1492,11 +1487,6 @@ border:none; </string>
     </property>
     <item>
      <property name="text">
-      <string>distribution </string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
       <string>normal </string>
      </property>
     </item>
@@ -1506,7 +1496,7 @@ border:none; </string>
      </property>
     </item>
    </widget>
-   <widget class="QLineEdit" name="variableName_3">
+   <widget class="QLineEdit" name="rvName_3">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -1527,7 +1517,7 @@ border:none; </string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="sd_2">
+   <widget class="QLineEdit" name="rvStdDev_2">
     <property name="geometry">
      <rect>
       <x>491</x>
@@ -1545,7 +1535,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="mean_2">
+   <widget class="QLineEdit" name="rvMean_2">
     <property name="geometry">
      <rect>
       <x>337</x>
@@ -1563,7 +1553,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="rvDistribution_2">
     <property name="geometry">
      <rect>
       <x>172</x>
@@ -1579,11 +1569,6 @@ border:none; </string>
     </property>
     <item>
      <property name="text">
-      <string>distribution </string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
       <string>normal </string>
      </property>
     </item>
@@ -1593,7 +1578,7 @@ border:none; </string>
      </property>
     </item>
    </widget>
-   <widget class="QLineEdit" name="variableName_2">
+   <widget class="QLineEdit" name="rvName_2">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -1614,7 +1599,7 @@ border:none; </string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="variableName_1">
+   <widget class="QLineEdit" name="rvName_1">
     <property name="geometry">
      <rect>
       <x>21</x>
@@ -1635,7 +1620,7 @@ border:none; </string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_1">
+   <widget class="QComboBox" name="rvDistribution_1">
     <property name="geometry">
      <rect>
       <x>172</x>
@@ -1651,11 +1636,6 @@ border:none; </string>
     </property>
     <item>
      <property name="text">
-      <string>distribution </string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
       <string>normal </string>
      </property>
     </item>
@@ -1665,7 +1645,7 @@ border:none; </string>
      </property>
     </item>
    </widget>
-   <widget class="QLineEdit" name="mean_1">
+   <widget class="QLineEdit" name="rvMean_1">
     <property name="geometry">
      <rect>
       <x>337</x>
@@ -1683,7 +1663,7 @@ border:none; </string>
      <string notr="true">border-radius: 5px;</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="sd_1">
+   <widget class="QLineEdit" name="rvStdDev_1">
     <property name="geometry">
      <rect>
       <x>491</x>
@@ -1721,38 +1701,38 @@ border:none; </string>
    <zorder>filePath</zorder>
    <zorder>pushButton_3</zorder>
    <zorder>pushButton_4</zorder>
-   <zorder>mean_4</zorder>
-   <zorder>sd_4</zorder>
-   <zorder>variableName_4</zorder>
-   <zorder>sd_5</zorder>
-   <zorder>mean_5</zorder>
+   <zorder>edpStdDev_1</zorder>
+   <zorder>edpMean_1</zorder>
+   <zorder>edpName_1</zorder>
+   <zorder>edpMean_2</zorder>
+   <zorder>edpStdDev_2</zorder>
    <zorder>pushButton_5</zorder>
    <zorder>pushButton_6</zorder>
-   <zorder>variableName_5</zorder>
+   <zorder>edpName_2</zorder>
    <zorder>pushButton_10</zorder>
    <zorder>pushButton_9</zorder>
-   <zorder>mean_7</zorder>
-   <zorder>variableName_7</zorder>
-   <zorder>sd_7</zorder>
+   <zorder>edpStdDev_3</zorder>
+   <zorder>edpName_3</zorder>
+   <zorder>edpMean_3</zorder>
    <zorder>comboBox_uq</zorder>
    <zorder>label_27</zorder>
-   <zorder>sd_3</zorder>
-   <zorder>mean_3</zorder>
-   <zorder>comboBox_3</zorder>
-   <zorder>variableName_3</zorder>
-   <zorder>sd_2</zorder>
-   <zorder>mean_2</zorder>
-   <zorder>comboBox_2</zorder>
-   <zorder>variableName_2</zorder>
-   <zorder>variableName_1</zorder>
-   <zorder>comboBox_1</zorder>
-   <zorder>mean_1</zorder>
-   <zorder>sd_1</zorder>
+   <zorder>rvStdDev_3</zorder>
+   <zorder>rvMean_3</zorder>
+   <zorder>rvDistribution_3</zorder>
+   <zorder>rvName_3</zorder>
+   <zorder>rvStdDev_2</zorder>
+   <zorder>rvMean_2</zorder>
+   <zorder>rvDistribution_2</zorder>
+   <zorder>rvName_2</zorder>
+   <zorder>rvName_1</zorder>
+   <zorder>rvDistribution_1</zorder>
+   <zorder>rvMean_1</zorder>
+   <zorder>rvStdDev_1</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>splitter</zorder>
    <zorder>layoutWidget</zorder>
    <zorder>layoutWidget</zorder>
-   <zorder>pushButton_2</zorder>
+   <zorder>runButton</zorder>
    <zorder>label_2</zorder>
    <zorder>line</zorder>
    <zorder>label_11</zorder>
