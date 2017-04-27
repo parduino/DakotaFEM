@@ -96,7 +96,8 @@ dakota -input dakota.in -output dakota.out -error dakota.err
 # copy dakota.out up to word Kurtosis
 cp dakota.out dakota.tmp
 sed -i '' '1,/Kurtosis/d' dakota.tmp
-cp dakota.out $dirName/
-cp dakotaTab.out $dirName/
+cp dakota.out $dirNAME/
+cp dakota.tmp $dirNAME/
+cp dakotaTab.out $dirNAME/
 
 exit
