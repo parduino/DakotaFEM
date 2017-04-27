@@ -141,22 +141,34 @@ void DataInput::on_runButton_clicked()
     QMessageBox messageBox;
     messageBox.critical(0,"Error",errorMessage);
     messageBox.setFixedSize(500,200);
+
     } else {
 
+     //
      // do dakota
+     //
+
+     // write json to file
      QString jsonFileName = path + QString("/dakota.json");
-     qDebug() << jsonFileName;
      QJsonDocument doc(json);
      QFile jsonFile(jsonFileName);
-     jsonFile.open(QFile::WriteOnly);
+     if(!jsonFile.open(QIODevice::WriteOnly)) {
+         QMessageBox::information(0, "error", jsonFile.errorString());
+         return;
+     }
+     //jsonFile.open(QFile::WriteOnly);
+
      jsonFile.write(doc.toJson());
      jsonFile.close();
 
      //setenv("DYLD_LIBRARY_PATH", QString("/Users/fmk/dakota/lib:/Users/fmk/dakota/bin").toLatin1().constData(), true);
 
-     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-     QStringList envlist = env.toStringList();
+     //
+     // invoke the script to invoke & run dakota
+     //
 
+     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+     //QStringList envlist = env.toStringList();
      //qDebug() << envlist;
 
      QProcess *proc = new QProcess();
@@ -165,8 +177,11 @@ void DataInput::on_runButton_clicked()
 
      proc->start("/Users/fmk/NHERI/DakotaFEM/localApp/wrapper.sh", QStringList() << fileInfo.absolutePath() << fileInfo.fileName());
      proc->waitForFinished(-1);
-     qDebug() << proc->errorString();
-     qDebug() << "PROCESS DONE";
+
+     //
+     // once finished, parse dakota output file
+     //
+
      QString dakotaData = path + QString("/dakota.tmp");
      QString dakotaTable = path + QString("/dakotaTab.out");
      QFile dakotaOut(dakotaData);
@@ -176,6 +191,7 @@ void DataInput::on_runButton_clicked()
 
      if(!dakotaOut.open(QIODevice::ReadOnly)) {
          QMessageBox::information(0, "error", dakotaOut.errorString());
+         return;
      }
 
      QTextStream in(&dakotaOut);
@@ -199,7 +215,7 @@ void DataInput::on_runButton_clicked()
          stdDev = QString::number(stdDevVal,'e',6);
 
 
-         // EDIT
+         // REDO with above
          if (i==0) {
              ui->edpMean_1->setText(mean);
              ui->edpStdDev_1->setText(stdDev);
@@ -209,15 +225,13 @@ void DataInput::on_runButton_clicked()
          } else if (i==2) {
              ui->edpMean_3->setText(mean);
              ui->edpStdDev_3->setText(stdDev);
-     }
-     //    qDebug() << "OUTPUT: " << index << " " << mean << " " << stdDev;
+          } // REDO
          }
      }
      dakotaOut.close();
 
     }
 
-    //
-    qDebug() << json;
 
+    qDebug() << json;
 }
