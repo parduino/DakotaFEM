@@ -1,0 +1,33 @@
+{
+    "dir": "/Users/fmk/NHERI/dakota/bash/joel",
+    "edp": [
+        {
+            "name": "roofDisp"
+        },
+        {
+            "name": "roofAccel"
+        }
+    ],
+    "mainInput": "Example.tcl",
+    "method": "method,\nsampling,\nsamples = 10 \nseed = 98765,\nsample_type random",
+    "randomVariables": [
+        {
+            "mean": 29000,
+            "name": "E",
+            "stdDev": 2000,
+            "type": "normal "
+        },
+        {
+            "mean": 60,
+            "name": "Fy",
+            "stdDev": 6,
+            "type": "normal "
+        },
+        {
+            "mean": 0.20000000000000001,
+            "name": "b",
+            "stdDev": 0.02,
+            "type": "normal "
+        }
+    ]
+}
