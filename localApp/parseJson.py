@@ -103,6 +103,8 @@ print('params.in')
 
 f = open('params.template', 'w')
 
+f.write('pwd\n')
+
 for i in xrange(numNormalUncertain):
     f.write('set ')
     f.write(normalUncertainName[i])

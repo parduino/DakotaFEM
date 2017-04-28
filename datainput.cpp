@@ -11,6 +11,7 @@
 #include <QProcessEnvironment>
 #include <QStringList>
 #include <QRegExp>
+#include <QStandardPaths>
 
 DataInput::DataInput(QWidget *parent) :
     QMainWindow(parent),
@@ -118,6 +119,7 @@ void DataInput::on_runButton_clicked()
     // check for errors in input
     //
 
+
     bool error = false;
     QString errorMessage;
 
@@ -148,6 +150,7 @@ void DataInput::on_runButton_clicked()
      // do dakota
      //
 
+
      // write json to file
      QString jsonFileName = path + QString("/dakota.json");
      QJsonDocument doc(json);
@@ -161,8 +164,6 @@ void DataInput::on_runButton_clicked()
      jsonFile.write(doc.toJson());
      jsonFile.close();
 
-     //setenv("DYLD_LIBRARY_PATH", QString("/Users/fmk/dakota/lib:/Users/fmk/dakota/bin").toLatin1().constData(), true);
-
      //
      // invoke the script to invoke & run dakota
      //
@@ -172,16 +173,28 @@ void DataInput::on_runButton_clicked()
      //qDebug() << envlist;
 
      QProcess *proc = new QProcess();
-     proc->setStandardErrorFile(QString("/Users/fmk/err"));
-     proc->setStandardOutputFile(QString("/Users/fmk/out"));
 
-     proc->start("/Users/fmk/NHERI/DakotaFEM/localApp/wrapper.sh", QStringList() << fileInfo.absolutePath() << fileInfo.fileName());
+     QString scriptToRun;
+    if (QSysInfo::kernelType() == "linux") {
+
+        scriptToRun = QString("/home/fmk/NHERI-SimCenter/DakotaFEM/localAPP/wrapper.sh");
+        proc->setStandardErrorFile(QString("/home/fmk/err"));
+        proc->setStandardOutputFile(QString("/home/fmk/out"));
+
+    } else {
+
+        scriptToRun = QString("/Users/fmk/NHERI/DakotaFEM/localAPP/wrapper.sh");
+        proc->setStandardErrorFile("/Users/fmk/err");
+        proc->setStandardOutputFile("/Users/fmk/out");
+     }
+
+     //proc->start("/home/fmk/NHERI-SimCenter/DakotaFEM/localApp/wrapper.sh", QStringList() << fileInfo.absolutePath() << fileInfo.fileName());
+     proc->start(scriptToRun, QStringList() << fileInfo.absolutePath() << fileInfo.fileName());
      proc->waitForFinished(-1);
 
      //
      // once finished, parse dakota output file
      //
-
      QString dakotaData = path + QString("/dakota.tmp");
      QString dakotaTable = path + QString("/dakotaTab.out");
      QFile dakotaOut(dakotaData);
@@ -201,6 +214,7 @@ void DataInput::on_runButton_clicked()
          fields << line.split(" ");
         //model->appendRow(fields);
      }
+
     // qDebug() << fields;
      for (int i=0; i<numEDP; i++) {
          if (!edpNames[i].isEmpty()) {

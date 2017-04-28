@@ -39,3 +39,8 @@ moc*
 
 # QT
 *.pro.user
+
+# application
+*.tmp
+*.out
+*.json

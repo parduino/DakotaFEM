@@ -1,5 +1,5 @@
 {
-    "dir": "/Users/fmk/NHERI/dakota/bash/joel",
+    "dir": "/home/fmk/NHERI-SimCenter/DakotaFEM/example",
     "edp": [
         {
             "name": "roofDisp"
@@ -9,7 +9,7 @@
         }
     ],
     "mainInput": "Example.tcl",
-    "method": "method,\nsampling,\nsamples = 10 \nseed = 98765,\nsample_type random",
+    "method": "method,\nsampling,\nsamples = 5 \nseed = 98765,\nsample_type random",
     "randomVariables": [
         {
             "mean": 29000,
@@ -24,7 +24,7 @@
             "type": "normal "
         },
         {
-            "mean": 0.20000000000000001,
+            "mean": 0.2,
             "name": "b",
             "stdDev": 0.02,
             "type": "normal "

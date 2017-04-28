@@ -6,19 +6,37 @@
 #
 # written: fmk
 
+# need to ensure OpenSees and dakota can be called
+
+platform='unknown'
+
+platform=$(uname)
+
+if [[ $platform == 'Darwin' ]]; then
+    export DAKOTA_PATH=$HOME/dakota/bin
+    export OPENSEES_PATH=$HOME/bin
+    export PATH=$PATH:$OPENSEES_PATH:$DAKOTA_PATH    
+    source $HOME/.profile
+elif [[ $platform == 'Linux' ]]; then
+    export DAKOTA_PATH=$HOME/dakota/dakota-6.5/bin
+    export LD_LIBRARY_PATH=$HOME/dakota/dakota-6.5/lib
+    export OPENSEES_PATH=$HOME/bin
+    export PATH=$PATH:$OPENSEES_PATH:$DAKOTA_PATH
+    source $HOME/.bashrc
+
+else
+    echo "PLATFORM NOT RECOGNIZED"
+fi
+
+
+
+
 #
 # input parameters
 #
 
-source $HOME/.profile
-
 dirNAME=$1
 scriptNAME=$2
-
-paramNAME=$dirNAME/dakota.json
-
-
-
 
 if [ "$#" -ne 2 ] || ! [ -d "$1" ]; then
   echo "Usage: $0 dirName scriptName" >&2
@@ -29,6 +47,7 @@ fi
 # default parameters
 #
 
+paramNAME=$dirNAME/dakota.json
 SIMCENTER_DIR=".SimCenter"
 TOOL_DIR="EE_UQ"
 COUNTER_FILE="counter.txt"
@@ -58,7 +77,7 @@ else
     count=0
 fi
 
-echo $count
+echo "Created directory: $count"
 
 #
 # mkdir for current run
@@ -95,7 +114,13 @@ dakota -input dakota.in -output dakota.out -error dakota.err
 
 # copy dakota.out up to word Kurtosis
 cp dakota.out dakota.tmp
-sed -i '' '1,/Kurtosis/d' dakota.tmp
+
+if [[ $platform == 'Darwin' ]]; then
+    sed -i '' '1,/Kurtosis/d' dakota.tmp
+else
+    sed -i '1,/Kurtosis/d' dakota.tmp
+fi
+
 cp dakota.out $dirNAME/
 cp dakota.tmp $dirNAME/
 cp dakotaTab.out $dirNAME/
