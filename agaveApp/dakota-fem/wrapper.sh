@@ -108,7 +108,8 @@ cp $workDIR/dakota.err $scriptDIR/dakota.err
 #
 # clean up
 #
-rm -fr $workDIR
+
+rm -fr $workDIR/
 
 if [ ! $? ]; then
         echo "dakota exited with an error status. $?" >&2
