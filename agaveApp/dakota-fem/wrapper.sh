@@ -3,38 +3,32 @@ WRAPPERDIR=$( cd "$( dirname "$0" )" && pwd )
 
 ${AGAVE_JOB_CALLBACK_RUNNING}
 
-# Run the script with the runtime values passed in from the job request
-PREFIX="/corral-repl/tacc/NHERI/shared/"
-AGAVEPREFIX='agave://designsafe.storage.default/'
-
-echo "arg0 is $0"
-echo "inputScript is ${inputScript}"
+#
+# inputs
+#
 
 INPUTSCRIPT='${inputScript}'
-echo "INPUTSCRIPT is $INPUTSCRIPT"
 TCLSCRIPT="${INPUTSCRIPT##*/}"
 
-echo "TCLSCRIPT is $TCLSCRIPT"
 INPUTDIRECTORY='${inputDirectory}'
-echo "INPUTDIR is $INPUTDIRECTORY"
 DIRNAME="${INPUTDIRECTORY##*/}"
 
-#DIRNAME=${INPUTDIRECTORY#${AGAVEPREFIX}}
-#FULLPATH=$PREFIX$DIRNAME
+# from Peter (not used yet)
+# Run the script with the runtime values passed in from the job request
+# PREFIX="/corral-repl/tacc/NHERI/shared/"
+# AGAVEPREFIX='agave://designsafe.storage.default/'
+# DIRNAME=${INPUTDIRECTORY#${AGAVEPREFIX}}
+# FULLPATH=$PREFIX$DIRNAME
 
+#
+# other parameters:
+#   workdir is were dakota will work
+#   scriptDIR is where original files are
+#   TEMPLATEDIR is the dakota template for dakota
+#
 
 workDIR=$(pwd)/SimCenter
 scriptDIR=$(pwd)/$INPUTDIRECTORY
-
-
-#echo $(ls $(pwd))
-
-module load petsc
-module load dakota
-
-#
-# input parameters
-#
 
 scriptNAME=$TCLSCRIPT
 dirNAME=$scriptDIR
@@ -43,32 +37,43 @@ TEMPLATEDIR=$workDIR/templatedir
 paramNAME=$dirNAME/dakota.json
 lastDirNAME=templatedir
 
+#echo $(ls $(pwd))
 
 #
-# create a dir to place all data associated with the app
-#  - this dir will contain a counter file and a dir foreach run
+# load some modules needed, Dakota and OpenSees
 #
 
+module load petsc
+module load dakota
 
 #
-# set up template directory, copy all files from current to template
+# create new directory in which dakota will work
+# create template dir (this will create workdir if below it)
+# & copy all data from script dir to template dir
 #
 
 mkdir -p $TEMPLATEDIR
 cp -R $scriptDIR/* $TEMPLATEDIR/
 
+#
+# copy the parameter file and python scripyt to parse it to work
+# and run the script in the parameter file
+#
+
 cp $paramNAME $workDIR
 cp parseJson.py $workDIR
-
 cd $workDIR
-
 python parseJson.py dakota.json
 
-#python -c "$pyScript" dakota.json
+# used if script needs to be in a string
+# python -c "$pyScript" dakota.json
 
+#echo $(ls $workDIR)
+#echo $(ls $TEMPLATEDIR)
 
-echo $(ls $workDIR)
-echo $(ls $TEMPLATEDIR)
+#
+# move all files script created to the template dir except dakota.in file
+#
 
 cp params.template $TEMPLATEDIR
 cp paramOUT.ops $TEMPLATEDIR
@@ -86,7 +91,12 @@ echo $(ls)
 
 OUT=`dakota -input dakota.in -output dakota.out -error dakota.err`
 
-# copy dakota.out up to word Kurtosis
+#
+# copy dakota.out & remove up to word Kurtosis
+#   .tmp file is file application uses
+# copy dakota output files to scriptDir as these only ones to be saved
+#
+
 cp dakota.out dakota.tmp
 sed -i '1,/Kurtosis/d' dakota.tmp
 
@@ -94,6 +104,11 @@ cp $workDIR/dakota.out $scriptDIR/dakota.out
 cp $workDIR/dakota.tmp $scriptDIR/dakota.tmp
 cp $workDIR/dakotaTab.out $scriptDIR/dakotaTab.out
 cp $workDIR/dakota.err $scriptDIR/dakota.err
+
+#
+# clean up
+#
+rm -fr $workDIR
 
 if [ ! $? ]; then
         echo "dakota exited with an error status. $?" >&2
